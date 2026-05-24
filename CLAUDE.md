@@ -15,12 +15,6 @@
 - WCAG 2.1 AA: keyboard navigation, ARIA labels on icon-only buttons, heading hierarchy via Typography, visible focus indicators, sufficient contrast
 - Roboto font via Google Fonts
 
-## Workflow
-
-- User stories and tasks are tracked as GitHub Issues (use `gh issue list` and `gh issue view`)
-- Labels: `user-story` for stories, `task` for implementation tasks
-- One branch per user story: `feature/us{n}-short-name`
-
 ## Project Structure
 
 - Components live in `src/components/`
