@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# ReactTaskManager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Kanban-style task management board built with React, TypeScript, and Material UI.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A drag-and-drop task board with three columns: To Do, In Progress, and Done. Users can create, edit, delete, and move tasks between columns. The app follows Material Design conventions and meets WCAG 2.1 AA accessibility standards.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** with TypeScript
+- **Vite** — build tooling and dev server
+- **Material UI (MUI)** — component library
+- **Zustand** — state management
+- **ESLint** with `eslint-plugin-jsx-a11y` — code quality and accessibility linting
+- **Prettier** — code formatting
 
-## Expanding the ESLint configuration
+## Design Constraints
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- All UI built with MUI components — no raw HTML elements for interactive or semantic content
+- WCAG 2.1 AA compliance: keyboard navigation, ARIA labels on icon-only buttons, proper heading hierarchy via `Typography`, visible focus indicators, sufficient contrast ratios
+- Roboto font via Google Fonts
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Project Structure
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/
+│   ├── Board.tsx        # Main board layout, holds column state
+│   ├── Column.tsx       # Single column (To Do | In Progress | Done)
+│   └── Card.tsx         # Individual task card
+├── App.tsx              # ThemeProvider, CssBaseline, app shell
+├── main.tsx             # Entry point
+└── index.css            # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
+
+Dev server runs at [http://localhost:5173](http://localhost:5173).
+
+## Scripts
+
+- `npm run dev` — start dev server
+- `npm run build` — production build
+- `npm run lint` — run ESLint
+
+## License
+
+MIT
