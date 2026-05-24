@@ -1,12 +1,22 @@
-import { Paper, Stack, Typography } from '@mui/material'
-import type { ReactNode } from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import { Button, Paper, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
+import { useTaskStore, type TaskStatus } from '../store/tasks'
+import Card from './Card'
+import TaskDialog from './TaskDialog'
 
 type ColumnProps = {
   title: string
-  children?: ReactNode
+  status: TaskStatus
 }
 
-function Column({ title, children }: ColumnProps) {
+function Column({ title, status }: ColumnProps) {
+  const tasks = useTaskStore((s) => s.tasks).filter((t) => t.status === status)
+  const addTask = useTaskStore((s) => s.addTask)
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const canAdd = status === 'todo'
+
   return (
     <Paper
       component="section"
@@ -17,7 +27,29 @@ function Column({ title, children }: ColumnProps) {
       <Typography variant="h2" sx={{ fontSize: '1.125rem', fontWeight: 500, mb: 2 }}>
         {title}
       </Typography>
-      <Stack spacing={1}>{children}</Stack>
+      <Stack spacing={1}>
+        {tasks.map((task) => (
+          <Card key={task.id} task={task} />
+        ))}
+      </Stack>
+      {canAdd && (
+        <>
+          <Button
+            startIcon={<AddIcon />}
+            onClick={() => setDialogOpen(true)}
+            aria-label="Add task"
+            sx={{ mt: tasks.length ? 2 : 0 }}
+            fullWidth
+          >
+            Add task
+          </Button>
+          <TaskDialog
+            open={dialogOpen}
+            onClose={() => setDialogOpen(false)}
+            onSubmit={(values) => addTask({ ...values, status })}
+          />
+        </>
+      )}
     </Paper>
   )
 }

@@ -1,7 +1,12 @@
 import { Box, Container, Typography } from '@mui/material'
+import type { TaskStatus } from '../store/tasks'
 import Column from './Column'
 
-const COLUMNS = ['To Do', 'In Progress', 'Done'] as const
+const COLUMNS: { title: string; status: TaskStatus }[] = [
+  { title: 'To Do', status: 'todo' },
+  { title: 'In Progress', status: 'in-progress' },
+  { title: 'Done', status: 'done' },
+]
 
 function Board() {
   return (
@@ -17,8 +22,8 @@ function Board() {
           alignItems: 'start',
         }}
       >
-        {COLUMNS.map((title) => (
-          <Column key={title} title={title} />
+        {COLUMNS.map(({ title, status }) => (
+          <Column key={status} title={title} status={status} />
         ))}
       </Box>
     </Container>
